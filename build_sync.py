@@ -6,5 +6,5 @@ def load(d):
         j=json.load(open(f)); x=j.get('data',j) if isinstance(j,dict) and 'data' in j and 'id' in j else j
         x=dict(x); x['id']=os.path.basename(f)[:-5]; out.append(x)
     return out
-json.dump({"routines":load('routines'),"notes":load('notes')},open('sync.json','w'),ensure_ascii=False,separators=(',',':'))
+json.dump({"routines":load('routines'),"notes":[n for n in load('notes') if not n.get('vid')]},open('sync.json','w'),ensure_ascii=False,separators=(',',':'))
 print('ok')
